@@ -25,7 +25,6 @@ jobs:
       command: lint
       paths: ${{ needs.affected.outputs.paths }}
 
-
   test:
     needs: affected
     uses: glasnt/trifle/.github/workflows/run-command.yaml@debugging-matchPackages
