@@ -17,25 +17,19 @@ jobs:
       head-sha: ${{ github.event.workflow_run.head_sha || github.sha }}
       config-file: .github/config.jsonc
 
-  # Run the custard run lint command
-  lint:
-    needs: affected
-    runs-on: ubuntu-latest
-    steps:
-      - uses: glasnt/trifle/actions/steps/custard-run@debugging-matchPackages
-        with:
-          custard-command: lint
-          paths: ${{ needs.affected.outputs.paths }}
 
-  # Run the custard run test command
+  lint:
+    uses: glasnt/trifle/.github/workflows/run-command.yaml@debugging-matchPackages
+    with:
+      command: lint
+      paths: ${{ needs.affected.outputs.paths }}
+
   test:
-    needs: affected
-    runs-on: ubuntu-latest
-    steps:
-      - uses: glasnt/trifle/actions/steps/custard-run@debugging-matchPackages
-        with:
-          custard-command: test
-          paths: ${{ needs.affected.outputs.paths }}
+    uses: glasnt/trifle/.github/workflows/run-command.yaml@debugging-matchPackages
+    with:
+      command: test
+      paths: ${{ needs.affected.outputs.paths }}
+
 
   # Confirm all checks complete
   done:
