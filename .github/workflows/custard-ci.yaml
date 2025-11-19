@@ -8,7 +8,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Find the packages that were changed
   affected:
     uses: glasnt/trifle/.github/workflows/affected.yaml@debugging-matchPackages
     permissions:
@@ -16,7 +15,6 @@ jobs:
     with:
       head-sha: ${{ github.event.workflow_run.head_sha || github.sha }}
       config-file: .github/config.jsonc
-
 
   lint:
     needs: affected
@@ -31,17 +29,6 @@ jobs:
     with:
       command: test
       paths: ${{ needs.affected.outputs.paths }}
-
-  # example: always run tests
-  always-test:
-    needs: affected
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: glasnt/trifle/actions/steps/map-run@debugging-matchPackages
-        with:
-          command: pwd && ls
-          paths: ${{ needs.affected.outputs.paths }}
 
   # Confirm all checks complete
   done:
