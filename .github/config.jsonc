@@ -1,0 +1,33 @@
+{
+    "package-file": [
+        "requirements.txt"
+    ],
+    "ci-setup-filename": "ci-setup.json",
+    "ci-setup-defaults": {
+        "env": {},
+        "secrets": {},
+        "node-version": 20,
+        "timeout-minutes": 10
+    },
+    // Common CI commands for each execution.
+    "commands": {
+        "lint": {
+            "pre": "pip install black",
+            "run": "black --check ."
+        },
+        "test": {
+            "pre": "pip install pytest",
+            "run": "pytest"
+        }
+    },
+    "match": [
+        "*.py"
+    ],
+    "ignore": [
+        ".github/",
+        ".gitignore",
+        "CONTRIBUTING.md",
+        "LICENSE",
+        "README.md"
+    ]
+}

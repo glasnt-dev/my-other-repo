@@ -1,0 +1,48 @@
+name: custard-ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  # Find the packages that were changed
+  affected:
+    uses: glasnt/trifle/.github/workflows/affected.yaml@debugging-matchPackages
+    permissions:
+      statuses: write
+    with:
+      head-sha: ${{ github.event.workflow_run.head_sha || github.sha }}
+      config-file: .github/config.jsonc
+
+  # Run the custard run lint command
+  lint:
+    needs: affected
+    uses: glasnt/trifle/actions/steps/custard-run@debugging-matchPackages
+    with:
+      custard-command: lint
+      paths: ${{ needs.affected.outputs.paths }}
+      config-file: .github/config.jsonc
+
+  # Run the custard run test command
+  test:
+    needs: affected
+    uses: glasnt/trifle/actions/steps/custard-run@debugging-matchPackages
+    with:
+      custard-command: test
+      paths: ${{ needs.affected.outputs.paths }}
+      config-file: .github/config.jsonc
+
+  # Confirm all checks complete
+  done:
+    needs: [affected, test, lint]
+    runs-on: ubuntu-latest
+    permissions:
+      statuses: write
+    steps:
+      - uses: glasnt/trifle/actions/steps/update-check@v0.0.10
+        with:
+          check: ${{ needs.affected.outputs.check }}
+          status: success
