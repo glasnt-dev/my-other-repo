@@ -17,6 +17,7 @@ jobs:
       head-sha: ${{ github.event.workflow_run.head_sha || github.sha }}
       config-file: .github/config.jsonc
 
+
   lint:
     needs: affected
     uses: glasnt/trifle/.github/workflows/run-command.yaml@debugging-matchPackages
@@ -30,6 +31,7 @@ jobs:
     with:
       command: test
       paths: ${{ needs.affected.outputs.paths }}
+
 
   # example: always run tests
   always-test:
