@@ -11,6 +11,8 @@ jobs:
   # Find the packages that were changed
   affected:
     uses: glasnt/trifle/.github/workflows/affected.yaml@debugging-matchPackages
+    permissions:
+      statuses: write
     with:
       head-sha: ${{ github.event.workflow_run.head_sha || github.sha }}
       config-file: .github/config.jsonc
