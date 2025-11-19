@@ -6,8 +6,8 @@
     "ci-setup-defaults": {
         "env": {},
         "secrets": {},
-        "node-version": 20,
-        "timeout-minutes": 10
+        "node-version": 24,
+        "timeout-minutes": 2
     },
     // Common CI commands for each execution.
     "commands": {
@@ -20,9 +20,6 @@
             "run": "pytest"
         }
     },
-    "match": [
-        "*.py"
-    ],
     "ignore": [
         ".github/",
         ".gitignore",
