@@ -20,20 +20,22 @@ jobs:
   # Run the custard run lint command
   lint:
     needs: affected
-    uses: glasnt/trifle/actions/steps/custard-run@debugging-matchPackages
-    with:
-      custard-command: lint
-      paths: ${{ needs.affected.outputs.paths }}
-      config-file: .github/config.jsonc
+    runs-on: ubuntu-latest
+    steps:
+      - uses: glasnt/trifle/actions/steps/custard-run@debugging-matchPackages
+        with:
+          custard-command: lint
+          paths: ${{ needs.affected.outputs.paths }}
 
   # Run the custard run test command
   test:
     needs: affected
-    uses: glasnt/trifle/actions/steps/custard-run@debugging-matchPackages
-    with:
-      custard-command: test
-      paths: ${{ needs.affected.outputs.paths }}
-      config-file: .github/config.jsonc
+    runs-on: ubuntu-latest
+    steps:
+      - uses: glasnt/trifle/actions/steps/custard-run@debugging-matchPackages
+        with:
+          custard-command: test
+          paths: ${{ needs.affected.outputs.paths }}
 
   # Confirm all checks complete
   done:
