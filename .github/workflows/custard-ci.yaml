@@ -12,6 +12,7 @@ jobs:
     uses: glasnt/trifle/.github/workflows/affected.yaml@v0.1.0
     permissions:
       statuses: write
+      actions: read
     with:
       head-sha: ${{ github.event.workflow_run.head_sha || github.sha }}
       config-file: .github/config.jsonc
